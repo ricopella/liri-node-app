@@ -47,16 +47,12 @@ switch (input[2]) {
     default:
         break;
 }
-
 // console.log(fullInput); // *test*
 
 
 /* ----------------- TWITTER ----------------- */
 
-
-
 function tweetsResponse() {
-
     // store keys object
     const twitterKeys = file.twitterKeys;
     const params = { screen_name: 'narins2017' };
@@ -83,9 +79,6 @@ function tweetsResponse() {
 };
 
 /* ----------------- SPOTIFY ----------------- */
-
-
-
 function spotifyResponse(fullInput) {
     // spotify key from exported file
     const spotifyKeys = file.spotifyKeys;
@@ -117,7 +110,6 @@ function spotifyResponse(fullInput) {
 
         }
     });
-
 }
 
 function spotifyNotSpecified() {
