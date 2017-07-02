@@ -2,6 +2,9 @@
 const file = require('./keys.js');
 const Twitter = require('twitter');
 const Spotify = require('node-spotify-api');
+const colors = require('colors');
+// const $ = require('jquery');
+const request = require('request');
 
 /* ----------------- INPUT ----------------- */
 
@@ -25,11 +28,18 @@ switch (input[2]) {
         break;
 
     case "spotify-this-song":
-        console.log('spotty');
-        spotifyResponse();
+        console.log('spotty!');
+        //  if no song is provided - default to "The Sign" by Ace of Base
+        if (fullInput === "") {
+            spotifyNotSpecified();
+            // if user input song
+        } else {
+            spotifyResponse(fullInput);
+        }
         break;
 
     case "movie-this":
+        getMovie();
         break;
 
     case "do-what-it-says":
@@ -64,6 +74,8 @@ function tweetsResponse() {
             // logs all tweets object
             // console.log(tweets[0].text);
             for (var i = 0; i < tweets.length; i++) {
+                console.log("\n=====================\n".green);
+
                 console.log("\n" + "#" + i + ". " + tweets[i].text);
                 console.log("Date: " + tweets[i].created_at);
             }
@@ -75,7 +87,7 @@ function tweetsResponse() {
 
 
 
-function spotifyResponse() {
+function spotifyResponse(fullInput) {
 
     const spotifyKeys = file.spotifyKeys;
 
@@ -84,14 +96,77 @@ function spotifyResponse() {
         secret: spotifyKeys.secret
     });
 
-    spotify.search({ type: 'track', query: 'All the Small Things' }, function(err, data) {
+    // change to fullInput
+    spotify.search({ type: 'track', query: fullInput }, function(err, data) {
         if (err) {
             return console.log('Error occurred: ' + err);
+        } else if (!err) {
+
+            console.log("\n=====================\n".yellow);
+
+            // store artist names
+            var artist = data.tracks.items[0].artists[0].name;
+            // store song name
+            var songs = data.tracks.items[0].name;
+            // store album song is from
+            var album = data.tracks.items[0].album.name;
+            // store preview link of the song from spotify
+            var url = data.tracks.items[0].preview_url;
+            console.log(songs);
+            console.log(artist);
+            console.log(album);
+            console.log(url);
+
+
         }
-        console.log(data);
+    });
+
+}
+
+function spotifyNotSpecified() {
+
+    const spotifyKeys = file.spotifyKeys;
+
+    var spotify = new Spotify({
+        id: spotifyKeys.id,
+        secret: spotifyKeys.secret
+    });
+
+    //  if no song is provided - default to "The Sign" by Ace of Base
+    console.log('testing123333');
+
+    spotify.search({ type: 'track', query: "The+Sign" }, function(err, data) {
+        if (err) {
+            return console.log('Error occurred: ' + err);
+        } else if (!err) {
+
+            console.log("\n=====================\n");
+
+            // store artist names
+            var artist = data.tracks.items[0].artists[0].name;
+            // store song name
+            var songs = data.tracks.items[0].name;
+            // store album song is from
+            var album = data.tracks.items[0].album.name;
+            // store preview link of the song from spotify
+            var url = data.tracks.items[0].preview_url;
+            console.log(songs);
+            console.log(artist);
+            console.log(album);
+            console.log(url);
+        }
     });
 };
 
 /* ----------------- MOVIE ----------------- */
 
+function getMovie() {
+    var queryURL = "http://www.omdbapi.com/?apikey=40e9cece&t=rush+hour"
+    $.ajax({
+        url: queryURL,
+        method: "GET"
+    }).done(function(response) {
+        console.log(response);
+    });
+}
 /* ----------------- DO WHAT IT SAYS ----------------- */
