@@ -3,7 +3,6 @@ const file = require('./keys.js');
 const Twitter = require('twitter');
 const Spotify = require('node-spotify-api');
 const colors = require('colors');
-// const $ = require('jquery');
 const request = require('request');
 
 /* ----------------- INPUT ----------------- */
@@ -61,7 +60,7 @@ function tweetsResponse() {
     // store keys object
     const twitterKeys = file.twitterKeys;
     const params = { screen_name: 'narins2017' };
-
+    // Twitter keys from export file
     var client = new Twitter({
         consumer_key: twitterKeys.consumer_key,
         consumer_secret: twitterKeys.consumer_secret,
@@ -74,9 +73,9 @@ function tweetsResponse() {
             // logs all tweets object
             // console.log(tweets[0].text);
             for (var i = 0; i < tweets.length; i++) {
-                console.log("\n=====================\n".green);
+                console.log("\n===================================================\n".green);
 
-                console.log("\n" + "#" + i + ". " + tweets[i].text);
+                console.log("#" + i + ". " + tweets[i].text);
                 console.log("Date: " + tweets[i].created_at);
             }
         }
@@ -88,9 +87,8 @@ function tweetsResponse() {
 
 
 function spotifyResponse(fullInput) {
-
+    // spotify key from exported file
     const spotifyKeys = file.spotifyKeys;
-
     var spotify = new Spotify({
         id: spotifyKeys.id,
         secret: spotifyKeys.secret
@@ -101,22 +99,21 @@ function spotifyResponse(fullInput) {
         if (err) {
             return console.log('Error occurred: ' + err);
         } else if (!err) {
-
-            console.log("\n=====================\n".yellow);
-
+            // store song object
+            var songResponse = data.tracks.items[0];
+            console.log("\n===================================================\n".yellow);
             // store artist names
-            var artist = data.tracks.items[0].artists[0].name;
+            var artist = songResponse.artists[0].name;
             // store song name
-            var songs = data.tracks.items[0].name;
+            var songs = songResponse.name;
             // store album song is from
-            var album = data.tracks.items[0].album.name;
+            var album = songResponse.album.name;
             // store preview link of the song from spotify
-            var url = data.tracks.items[0].preview_url;
-            console.log(songs);
-            console.log(artist);
-            console.log(album);
-            console.log(url);
+            var url = songResponse.preview_url;
 
+            console.log("Song Title: ".red + songs + " Artist Name: ".blue + artist + " Album Title: ".magenta + album);
+            console.log("Preview Link: ".cyan + url);
+            console.log("\n===================================================\n".yellow);
 
         }
     });
@@ -139,21 +136,19 @@ function spotifyNotSpecified() {
         if (err) {
             return console.log('Error occurred: ' + err);
         } else if (!err) {
-
-            console.log("\n=====================\n");
+            var songResponse = data.tracks.items[0];
+            console.log("\n=====================\n".yellow);
 
             // store artist names
-            var artist = data.tracks.items[0].artists[0].name;
+            var artist = songResponse.artists[0].name;
             // store song name
-            var songs = data.tracks.items[0].name;
+            var songs = songResponse.name;
             // store album song is from
-            var album = data.tracks.items[0].album.name;
+            var album = songResponse.album.name;
             // store preview link of the song from spotify
-            var url = data.tracks.items[0].preview_url;
-            console.log(songs);
-            console.log(artist);
-            console.log(album);
-            console.log(url);
+            var url = songResponse.preview_url;
+            console.log("Song Title: ".red + songs + " By: ".blue + artist + " Album Title: ".magenta + album);
+            console.log("Preview Link: ".cyan + url);
         }
     });
 };
@@ -162,11 +157,11 @@ function spotifyNotSpecified() {
 
 function getMovie() {
     var queryURL = "http://www.omdbapi.com/?apikey=40e9cece&t=rush+hour"
-    $.ajax({
-        url: queryURL,
-        method: "GET"
-    }).done(function(response) {
-        console.log(response);
-    });
+        // $.ajax({
+        //     url: queryURL,
+        //     method: "GET"
+        // }).done(function(response) {
+        //     console.log(response);
+        // });
 }
 /* ----------------- DO WHAT IT SAYS ----------------- */
