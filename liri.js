@@ -147,11 +147,37 @@ function spotifyNotSpecified() {
 
 function getMovie() {
     var queryURL = "http://www.omdbapi.com/?apikey=40e9cece&t=rush+hour"
-        // $.ajax({
-        //     url: queryURL,
-        //     method: "GET"
-        // }).done(function(response) {
-        //     console.log(response);
-        // });
+
+    request.get(queryURL, { json: true, body: input }, function(err, res, body) {
+        // * Tests *
+        // console.log('error:', err); // Print the error if one occurred
+        // console.log('statusCode:', res && res.statusCode); // Print the response status code if a response was received
+        // console.log('body:', body); // Print the HTML for the Google homepage.
+
+        // no error or 404
+        if (!err && res.statusCode === 200) {
+
+            console.log("\n=====================\n".yellow);
+
+            // output title
+            console.log("Title: ".red + body.Title);
+            // output year movie released
+            console.log("Year: ".red + body.Year);
+            // output imdb rating
+            console.log("IMDB Rating: ".red + body.Ratings[0].Value);
+            // rotten tomatoes rating
+            console.log("IMDB Rating: ".red + body.Ratings[1].Value);
+            // country where teh movie was produced
+            console.log('Country: '.red + body.Country);
+            // language of the movie
+            console.log('Languages: '.red + body.Language);
+            // plot of the movie 
+            console.log('Movie Plot: '.red + body.Plot);
+            // actors in the movie
+            console.log('Actors:'.red + body.Actors);
+        }
+    })
 }
+
+
 /* ----------------- DO WHAT IT SAYS ----------------- */
