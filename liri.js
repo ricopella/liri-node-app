@@ -8,8 +8,8 @@ const request = require('request');
 /* ----------------- INPUT ----------------- */
 
 // Store input
-var input = process.argv;
-var fullInput = "";
+let input = process.argv;
+let fullInput = "";
 
 // takes all arguments after 3rd index & saves them into one string
 // used for movie-this spotify-this-song
@@ -29,20 +29,27 @@ let argChoice = {
         "spotify-this-song": function() {
             //  if no song is provided - default to "The Sign" by Ace of Base
             if (fullInput === "") {
-                spotifyNotSpecified();
+                fullInput = "the+sign";
+                spotifyResponse(fullInput);
                 // if user input song
             } else {
                 spotifyResponse(fullInput);
             }
         },
         "movie-this": function() {
-            getMovie();
-            console.log('spotty!');
 
+            if (fullInput === "") {
+                fullInput = "mr+nobody";
+                getMovie();
+            } else {
+                getMovie();
+                console.log('spotty!');
+            }
         },
         "do-what-it-says": function() {}
-    }
-    // chooses function through object literal
+    } // end argChoice
+
+// chooses function through object literal
 argChoice[input[2]]();
 
 // console.log(fullInput); // *test*
@@ -74,7 +81,7 @@ function tweetsResponse() {
             }
         }
     });
-};
+}; // end tweetsResponse
 
 /* ----------------- SPOTIFY ----------------- */
 function spotifyResponse(fullInput) {
@@ -108,45 +115,12 @@ function spotifyResponse(fullInput) {
 
         }
     });
-}
-
-function spotifyNotSpecified() {
-
-    const spotifyKeys = file.spotifyKeys;
-
-    var spotify = new Spotify({
-        id: spotifyKeys.id,
-        secret: spotifyKeys.secret
-    });
-
-    //  if no song is provided - default to "The Sign" by Ace of Base
-    console.log('testing123333');
-
-    spotify.search({ type: 'track', query: "The+Sign" }, function(err, data) {
-        if (err) {
-            return console.log('Error occurred: ' + err);
-        } else if (!err) {
-            var songResponse = data.tracks.items[0];
-            console.log("\n=====================\n".yellow);
-
-            // store artist names
-            var artist = songResponse.artists[0].name;
-            // store song name
-            var songs = songResponse.name;
-            // store album song is from
-            var album = songResponse.album.name;
-            // store preview link of the song from spotify
-            var url = songResponse.preview_url;
-            console.log("Song Title: ".red + songs + " By: ".blue + artist + " Album Title: ".magenta + album);
-            console.log("Preview Link: ".cyan + url);
-        }
-    });
-};
+}; // end spotifyResponse
 
 /* ----------------- MOVIE ----------------- */
 
 function getMovie() {
-    var queryURL = "http://www.omdbapi.com/?apikey=40e9cece&t=rush+hour"
+    var queryURL = "http://www.omdbapi.com/?apikey=40e9cece&t=" + fullInput;
 
     request.get(queryURL, { json: true, body: input }, function(err, res, body) {
         // * Tests *
@@ -177,7 +151,7 @@ function getMovie() {
             console.log('Actors:'.red + body.Actors);
         }
     })
-}
+} // end getMovie()
 
 
 /* ----------------- DO WHAT IT SAYS ----------------- */
