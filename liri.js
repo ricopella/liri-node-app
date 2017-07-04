@@ -1,4 +1,4 @@
-// import keys.js file
+// imports
 const file = require('./keys.js');
 const Twitter = require('twitter');
 const Spotify = require('node-spotify-api');
@@ -20,33 +20,31 @@ for (var i = 3; i < input.length; i++)
         fullInput += input[i]
     }
 
-switch (input[2]) {
-    case "my-tweets":
-        console.log('tweets!');
-        tweetsResponse();
-        break;
+    // object for handleing inputs to dictate which function is called
+let argChoice = {
+        "my-tweets": function() {
+            console.log('tweets!');
+            tweetsResponse();
+        },
+        "spotify-this-song": function() {
+            //  if no song is provided - default to "The Sign" by Ace of Base
+            if (fullInput === "") {
+                spotifyNotSpecified();
+                // if user input song
+            } else {
+                spotifyResponse(fullInput);
+            }
+        },
+        "movie-this": function() {
+            getMovie();
+            console.log('spotty!');
 
-    case "spotify-this-song":
-        console.log('spotty!');
-        //  if no song is provided - default to "The Sign" by Ace of Base
-        if (fullInput === "") {
-            spotifyNotSpecified();
-            // if user input song
-        } else {
-            spotifyResponse(fullInput);
-        }
-        break;
+        },
+        "do-what-it-says": function() {}
+    }
+    // chooses function through object literal
+argChoice[input[2]]();
 
-    case "movie-this":
-        getMovie();
-        break;
-
-    case "do-what-it-says":
-        break;
-
-    default:
-        break;
-}
 // console.log(fullInput); // *test*
 
 
