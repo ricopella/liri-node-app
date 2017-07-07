@@ -52,7 +52,8 @@ let argChoice = {
 // chooses function through object literal
 argChoice[input[2]]();
 
-// console.log(fullInput); // *test*
+// *test*
+// console.log(fullInput); 
 
 
 /* ----------------- TWITTER ----------------- */
@@ -131,7 +132,7 @@ function getMovie() {
         // no error or 404
         if (!err && res.statusCode === 200) {
 
-            console.log("\n=====================\n".yellow);
+            console.log("\n========================================================\n".yellow);
 
             // output title
             console.log("Title: ".red + body.Title);
