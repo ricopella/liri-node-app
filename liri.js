@@ -4,6 +4,7 @@ const Twitter = require('twitter');
 const Spotify = require('node-spotify-api');
 const colors = require('colors');
 const request = require('request');
+const fs = require('fs');
 
 /* ----------------- INPUT ----------------- */
 
@@ -13,7 +14,7 @@ let fullInput = "";
 
 // takes all arguments after 3rd index & saves them into one string
 // used for movie-this spotify-this-song
-for (var i = 3; i < input.length; i++)
+for (let i = 3; i < input.length; i++)
     if (i > 3 && i < input.length) {
         fullInput = fullInput + "+" + input[i]
     } else {
@@ -23,13 +24,12 @@ for (var i = 3; i < input.length; i++)
     // object for handleing inputs to dictate which function is called
 let argChoice = {
         "my-tweets": function() {
-            console.log('tweets!');
             tweetsResponse();
         },
         "spotify-this-song": function() {
             //  if no song is provided - default to "The Sign" by Ace of Base
             if (fullInput === "") {
-                fullInput = "the+sign";
+                fullInput = "The Sign Ace";
                 spotifyResponse(fullInput);
                 // if user input song
             } else {
@@ -46,7 +46,9 @@ let argChoice = {
                 console.log('spotty!');
             }
         },
-        "do-what-it-says": function() {}
+        "do-what-it-says": function() {
+            doWhatSays();
+        }
     } // end argChoice
 
 // chooses function through object literal
@@ -74,7 +76,7 @@ function tweetsResponse() {
         if (!error) {
             // logs all tweets object
             // console.log(tweets[0].text);
-            for (var i = 0; i < tweets.length; i++) {
+            for (let i = 0; i < tweets.length; i++) {
                 console.log("\n===================================================\n".green);
 
                 console.log("#" + i + ". " + tweets[i].text);
@@ -141,7 +143,7 @@ function getMovie() {
             // output imdb rating
             console.log("IMDB Rating: ".red + body.Ratings[0].Value);
             // rotten tomatoes rating
-            console.log("IMDB Rating: ".red + body.Ratings[1].Value);
+            console.log("Rotten Tomatoes Rating: ".red + body.Ratings[1].Value);
             // country where teh movie was produced
             console.log('Country: '.red + body.Country);
             // language of the movie
@@ -150,9 +152,31 @@ function getMovie() {
             console.log('Movie Plot: '.red + body.Plot);
             // actors in the movie
             console.log('Actors:'.red + body.Actors);
+
         }
     })
 } // end getMovie()
 
 
 /* ----------------- DO WHAT IT SAYS ----------------- */
+function doWhatSays() {
+    fs.readFile('./random.txt', 'utf8', (err, data) => {
+
+        // If the code experiences any errors it will log the error to the console.
+        if (err) {
+            return console.log(err);
+        }
+        // test readFile data
+        // console.log(`Read File: ${data}`);
+
+        // store into array
+        var dataArr = data.split(',');
+        // test
+        // console.log(`array'd: ${dataArr[1]}`);
+
+        fullInput = dataArr[1];
+
+        spotifyResponse(fullInput);
+
+    });
+} // end doWhatSays
