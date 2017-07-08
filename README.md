@@ -45,7 +45,7 @@ You will need [Node.JS](https://www.npmjs.com/) and [NPM](https://nodejs.org/en/
        * Actors in the movie.
 
 4.      `node liri.js do-what-it-says`
-    * runs any commans you have run in the past
+    * runs any commands you have run in the past
 
 ### Packages Used
 
