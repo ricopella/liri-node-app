@@ -59,4 +59,4 @@ You will need [Node.JS](https://www.npmjs.com/) and [NPM](https://nodejs.org/en/
 
 ### Log File
 
-The file `log.txt` is a time-stamped documentation of output data from each application call
+The file `log.txt` is a time-stamped documentation of output data from each application call. This will be created after your first applciation call and then will continue to append.
