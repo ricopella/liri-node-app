@@ -173,10 +173,13 @@ function doWhatSays() {
         var dataArr = data.split(',');
         // test
         // console.log(`array'd: ${dataArr[1]}`);
-
+        // store 1st argument/item in array for which function is being called
+        var funcName = dataArr[0];
+        // store 2nd argument/item in array for which song/movie is being searched
         fullInput = dataArr[1];
 
-        spotifyResponse(fullInput);
+        // returns data
+        argChoice[funcName](fullInput);
 
     });
 } // end doWhatSays
