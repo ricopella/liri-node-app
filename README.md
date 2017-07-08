@@ -8,6 +8,8 @@ LIRI is like iPhone's SIRI. However, while SIRI is a Speech Interpretation and R
 
 Follow these instructions to clone the project and run on your local drive.
 
+* **Please Note**: You must obtain `keys.js` by @ricopella in order for `my-tweets` and `spotify-this-song` to work.
+
 ### Prerequisites
 
 You will need [Node.JS](https://www.npmjs.com/) and [NPM](https://nodejs.org/en/) installed on your system.
@@ -53,4 +55,8 @@ You will need [Node.JS](https://www.npmjs.com/) and [NPM](https://nodejs.org/en/
 * [OMDb](https://www.npmjs.com/package/omdb)
 * [Requests](https://www.npmjs.com/package/requests)
 * [Colors](https://www.npmjs.com/package/colors)
+* [log4js](https://github.com/nomiddlename/log4js-node)
 
+### Log File
+
+The file `log.txt` is a time-stamped documentation of output data from each application call

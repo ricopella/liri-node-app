@@ -5,6 +5,7 @@ const Spotify = require('node-spotify-api');
 const colors = require('colors');
 const request = require('request');
 const fs = require('fs');
+const log = require('log4js');
 
 /* ----------------- INPUT ----------------- */
 
@@ -81,6 +82,12 @@ function tweetsResponse() {
 
                 console.log("#" + i + ". " + tweets[i].text);
                 console.log("Date: " + tweets[i].created_at);
+
+                // Log output to log.txt
+                logger.debug("\n===================================================\n".green);
+                logger.debug("#" + i + ". " + tweets[i].text);
+                logger.debug("Date: " + tweets[i].created_at);
+
             }
         }
     });
@@ -115,6 +122,13 @@ function spotifyResponse(fullInput) {
             console.log("Song Title: ".red + songs + " Artist Name: ".blue + artist + " Album Title: ".magenta + album);
             console.log("Preview Link: ".cyan + url);
             console.log("\n===================================================\n".yellow);
+
+            // Log output to log.txt
+            logger.debug("\n===================================================\n".yellow);
+            logger.debug("Song Title: ".red + songs + " Artist Name: ".blue + artist + " Album Title: ".magenta + album);
+            logger.debug("Preview Link: ".cyan + url);
+            logger.debug("\n===================================================\n".yellow);
+
 
         }
     });
@@ -153,6 +167,16 @@ function getMovie() {
             // actors in the movie
             console.log('Actors:'.red + body.Actors);
 
+            // Log output to log.txt
+            logger.debug("\n========================================================\n".yellow);
+            logger.debug("Title: ".red + body.Title);
+            logger.debug("Year: ".red + body.Year);
+            logger.debug("IMDB Rating: ".red + body.Ratings[0].Value);
+            logger.debug("Rotten Tomatoes Rating: ".red + body.Ratings[1].Value);
+            logger.debug('Country: '.red + body.Country);
+            logger.debug('Languages: '.red + body.Language);
+            logger.debug('Movie Plot: '.red + body.Plot);
+            logger.debug('Actors:'.red + body.Actors);
         }
     })
 } // end getMovie()
@@ -178,8 +202,23 @@ function doWhatSays() {
         // store 2nd argument/item in array for which song/movie is being searched
         fullInput = dataArr[1];
 
-        // returns data
-        argChoice[funcName](fullInput);
+        // returns data (bug with logger)
+        // argChoice[funcName](fullInput);
 
+        // Log output to log.txt
+        logger.debug(argChoice[funcName](fullInput));
     });
 } // end doWhatSays
+
+/* ----------------- * BONUS LOG * ----------------- */
+
+const logger = log.getLogger();
+
+log.configure({
+    appenders: {
+        everything: { type: 'file', filename: 'log.txt' }
+    },
+    categories: {
+        default: { appenders: ['everything'], level: 'debug' }
+    }
+});
