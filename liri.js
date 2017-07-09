@@ -22,7 +22,7 @@ for (let i = 3; i < input.length; i++)
         fullInput += input[i]
     }
 
-    // object for handleing inputs to dictate which function is called
+    // object for handling inputs to dictate which function is called
 let argChoice = {
         "my-tweets": function() {
             tweetsResponse();
@@ -200,13 +200,13 @@ function doWhatSays() {
         // store 1st argument/item in array for which function is being called
         var funcName = dataArr[0];
         // store 2nd argument/item in array for which song/movie is being searched
-        fullInput = dataArr[1];
 
         // returns data (bug with logger)
-        // argChoice[funcName](fullInput);
+        // argChoice[funcName]();
 
+        //argChoice[do-what-it-says]('some text')
         // Log output to log.txt
-        logger.debug(argChoice[funcName](fullInput));
+        logger.debug(argChoice[funcName]());
     });
 } // end doWhatSays
 
