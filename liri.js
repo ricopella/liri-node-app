@@ -24,32 +24,10 @@ for (let i = 3; i < input.length; i++)
 
     // object for handling inputs to dictate which function is called
 let argChoice = {
-        "my-tweets": function() {
-            tweetsResponse();
-        },
-        "spotify-this-song": function() {
-            //  if no song is provided - default to "The Sign" by Ace of Base
-            if (fullInput === "") {
-                fullInput = "The Sign Ace";
-                spotifyResponse(fullInput);
-                // if user input song
-            } else {
-                spotifyResponse(fullInput);
-            }
-        },
-        "movie-this": function() {
-
-            if (fullInput === "") {
-                fullInput = "mr+nobody";
-                getMovie();
-            } else {
-                getMovie();
-                console.log('spotty!');
-            }
-        },
-        "do-what-it-says": function() {
-            doWhatSays();
-        }
+        "my-tweets": () => { tweetsResponse() },
+        "spotify-this-song": () => { fullInput === "" ? spotifyResponse("The Sign Ace") : spotifyResponse(fullInput) },
+        "movie-this": () => { fullInput === "" ? getMovie("mr+nobody") : getMovie(fullInput) },
+        "do-what-it-says": () => { doWhatSays() }
     } // end argChoice
 
 // chooses function through object literal
@@ -136,7 +114,7 @@ function spotifyResponse(fullInput) {
 
 /* ----------------- MOVIE ----------------- */
 
-function getMovie() {
+function getMovie(fullInput) {
     var queryURL = "http://www.omdbapi.com/?apikey=40e9cece&t=" + fullInput;
 
     request.get(queryURL, { json: true, body: input }, function(err, res, body) {
