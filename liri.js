@@ -83,7 +83,7 @@ function spotifyResponse(fullInput) {
         } else if (!err) {
             // store song object
             var songResponse = data.tracks.items[0];
-            console.log("\n===================================================\n\n".black);
+            console.log("\n===================================================\n\n".green);
             // store artist names
             var artist = songResponse.artists[0].name;
             // store song name
@@ -95,13 +95,13 @@ function spotifyResponse(fullInput) {
 
             console.log("Song Title: ".red + songs + " Artist Name: ".blue + artist + " Album Title: ".magenta + album);
             console.log("Preview Link: ".cyan + url);
-            console.log("\n\n===================================================\n".black);
+            console.log("\n\n===================================================\n".green);
 
             // Log output to log.txt
-            logger.debug("\n===================================================\n".black);
+            logger.debug("\n===================================================\n".green);
             logger.debug("Song Title: ".red + songs + " Artist Name: ".blue + artist + " Album Title: ".magenta + album);
             logger.debug("Preview Link: ".cyan + url);
-            logger.debug("\n===================================================\n".black);
+            logger.debug("\n===================================================\n".green);
         }
     });
 }; // end spotifyResponse
@@ -115,7 +115,7 @@ function getMovie(fullInput) {
         // no error or 404
         if (!err && res.statusCode === 200) {
 
-            console.log("\n========================================================\n\n".black);
+            console.log("\n========================================================\n\n".green);
 
             // output title
             console.log("Title: ".red + body.Title);
@@ -134,11 +134,11 @@ function getMovie(fullInput) {
             // actors in the movie
             console.log('Actors:'.red + body.Actors);
 
-            console.log("\n\n========================================================\n".black);
+            console.log("\n\n========================================================\n".green);
 
 
             // Log output to log.txt
-            logger.debug("\n========================================================\n".black);
+            logger.debug("\n========================================================\n".green);
             logger.debug("Title: ".red + body.Title);
             logger.debug("Year: ".red + body.Year);
             logger.debug("IMDB Rating: ".red + body.Ratings[0].Value);

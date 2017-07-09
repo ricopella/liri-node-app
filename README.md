@@ -47,6 +47,10 @@ You will need [Node.JS](https://www.npmjs.com/) and [NPM](https://nodejs.org/en/
 4.      `node liri.js do-what-it-says`
     * runs any commands you have run in the past
 
+# Demo
+
+![Demo](https://media.giphy.com/media/12lC1QmR9rpxmw/giphy.gif)
+
 ### Packages Used
 
 * [Node.JS](https://www.npmjs.com/)
