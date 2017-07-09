@@ -33,10 +33,6 @@ let argChoice = {
 // chooses function through object literal
 argChoice[input[2]]();
 
-// *test*
-// console.log(fullInput); 
-
-
 /* ----------------- TWITTER ----------------- */
 
 function tweetsResponse() {
@@ -87,7 +83,7 @@ function spotifyResponse(fullInput) {
         } else if (!err) {
             // store song object
             var songResponse = data.tracks.items[0];
-            console.log("\n===================================================\n".yellow);
+            console.log("\n===================================================\n\n".black);
             // store artist names
             var artist = songResponse.artists[0].name;
             // store song name
@@ -99,15 +95,13 @@ function spotifyResponse(fullInput) {
 
             console.log("Song Title: ".red + songs + " Artist Name: ".blue + artist + " Album Title: ".magenta + album);
             console.log("Preview Link: ".cyan + url);
-            console.log("\n===================================================\n".yellow);
+            console.log("\n\n===================================================\n".black);
 
             // Log output to log.txt
-            logger.debug("\n===================================================\n".yellow);
+            logger.debug("\n===================================================\n".black);
             logger.debug("Song Title: ".red + songs + " Artist Name: ".blue + artist + " Album Title: ".magenta + album);
             logger.debug("Preview Link: ".cyan + url);
-            logger.debug("\n===================================================\n".yellow);
-
-
+            logger.debug("\n===================================================\n".black);
         }
     });
 }; // end spotifyResponse
@@ -118,15 +112,10 @@ function getMovie(fullInput) {
     var queryURL = "http://www.omdbapi.com/?apikey=40e9cece&t=" + fullInput;
 
     request.get(queryURL, { json: true, body: input }, function(err, res, body) {
-        // * Tests *
-        // console.log('error:', err); // Print the error if one occurred
-        // console.log('statusCode:', res && res.statusCode); // Print the response status code if a response was received
-        // console.log('body:', body); // Print the HTML for the Google homepage.
-
         // no error or 404
         if (!err && res.statusCode === 200) {
 
-            console.log("\n========================================================\n".yellow);
+            console.log("\n========================================================\n\n".black);
 
             // output title
             console.log("Title: ".red + body.Title);
@@ -145,8 +134,11 @@ function getMovie(fullInput) {
             // actors in the movie
             console.log('Actors:'.red + body.Actors);
 
+            console.log("\n\n========================================================\n".black);
+
+
             // Log output to log.txt
-            logger.debug("\n========================================================\n".yellow);
+            logger.debug("\n========================================================\n".black);
             logger.debug("Title: ".red + body.Title);
             logger.debug("Year: ".red + body.Year);
             logger.debug("IMDB Rating: ".red + body.Ratings[0].Value);
@@ -168,21 +160,14 @@ function doWhatSays() {
         if (err) {
             return console.log(err);
         }
-        // test readFile data
-        // console.log(`Read File: ${data}`);
 
         // store into array
         var dataArr = data.split(',');
-        // test
-        // console.log(`array'd: ${dataArr[1]}`);
+
         // store 1st argument/item in array for which function is being called
         var funcName = dataArr[0];
         // store 2nd argument/item in array for which song/movie is being searched
 
-        // returns data (bug with logger)
-        // argChoice[funcName]();
-
-        //argChoice[do-what-it-says]('some text')
         // Log output to log.txt
         logger.debug(argChoice[funcName]());
     });
